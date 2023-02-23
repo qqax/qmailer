@@ -1,4 +1,4 @@
-package smtp
+package qmailer
 
 import (
 	mail "github.com/xhit/go-simple-mail/v2"
@@ -6,16 +6,16 @@ import (
 )
 
 type Config struct {
-	MailHost string
-	MailPort int
-	MailUsername string
-	MailPassword string
-	MailEncryption mail.Encryption
+	MailHost              string
+	MailPort              int
+	MailUsername          string
+	MailPassword          string
+	MailEncryption        mail.Encryption
 	MailConnectionTimeout time.Duration
-	MailSendTimeout time.Duration
-	SmtpMaxConnections uint32
-	SmtpAttempts uint32
-	SmtpTimeout time.Duration
+	MailSendTimeout       time.Duration
+	SmtpMaxConnections    uint32
+	SmtpAttempts          uint32
+	SmtpTimeout           time.Duration
 }
 
 func Setup(cfg *Config) {

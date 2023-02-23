@@ -1,4 +1,4 @@
-package smtp
+package qmailer
 
 import (
 	mail "github.com/xhit/go-simple-mail/v2"
