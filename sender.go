@@ -23,31 +23,19 @@ func init() {
 	in = make(chan *mail.Email)
 }
 
-func SendEmail(templateName string, data *EmailData) (chan *result, error) {
+func SendEmail(template *template.Template, data *EmailData) (chan *result, error) {
 	var (
 		mu   sync.Mutex
 		body bytes.Buffer
 	)
 	out := make(chan *result)
 
-	paths := []string{
-		"mailer\\templates\\base.html", "mailer\\templates\\" + templateName, "mailer\\" +
-			"templates\\styles.html"}
-
-	templateData, err := template.ParseFiles(paths...)
-	//template, err := ParseTemplateDir("./mailer/templates")
-	if err != nil {
-		log.Fatal().Err(err).Msg("Could not parse template")
-	}
-
-	templateData = templateData.Lookup(templateName)
-	err = templateData.Execute(&body, &data.TemplateData)
+	err := template.Execute(&body, &data.TemplateData)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Could not execute template")
 	}
 
 	e := mail.NewMSG()
-
 	e.SetFrom(data.From).
 		SetSubject(data.Subject)
 
